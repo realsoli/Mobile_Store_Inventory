@@ -19,12 +19,12 @@ class Color(models.Model):
 class Phone(models.Model):
     model = models.CharField(max_length=100, unique=True)
     brand = models.ForeignKey(Brand, on_delete=models.CASCADE)
-    price = models.PositiveIntegerField()
     color = models.ForeignKey(Color, on_delete=models.CASCADE)
+    price = models.PositiveIntegerField()
     image = models.ImageField(upload_to='phone_images', null=True, blank=True)
-    screen_size = models.PositiveIntegerField()
+    screen_size = models.FloatField()
     is_available = models.BooleanField(default=True)
 
     def __str__(self):
-        availability = 'Available' if self.is_available else 'Sold'
+        availability = 'Available' if self.is_available else 'Not Available'
         return f"{self.brand.name} {self.model} - {availability}"
