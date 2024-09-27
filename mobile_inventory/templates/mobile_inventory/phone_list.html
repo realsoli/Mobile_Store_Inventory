@@ -1,0 +1,75 @@
+{% load static %}
+{% load custom_filters %}
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لیست موبایل‌ها</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+<h1>لیست موبایل‌ها</h1>
+
+<form method="get" class="search-form">
+    <input type="text" name="query" id="query" value="{{ request.GET.query|default:'' }}" class="search-input"
+           placeholder="جستجوی گوشی...">
+    <button type="submit" class="search-button">جستجو</button>
+</form>
+
+
+{#{% if request.user.is_superuser %}#}
+{#    <a href="{% url 'add_phone' %}">افزودن محصول</a>#}
+{#{% endif %}#}
+
+<table border="1" style="width: 100%; border-collapse: collapse;">
+    <thead>
+    <tr>
+        <th>برند</th>
+        <th>مدل</th>
+        <th>ملیت برند</th>
+        <th>رنگ</th>
+        <th>قیمت</th>
+        <th>سایز صفحه نمایش</th>
+        <th>وضعیت</th>
+        <th>کشور سازنده</th>
+        <th>تصویر</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for phone in phones %}
+        <tr>
+            <td>{{ phone.brand.name }}</td>
+            <td>{{ phone.model }}</td>
+            <td>{{ phone.brand.nationality }}</td>
+            <td>{{ phone.color.name }}</td>
+            <td>{{ phone.price|three_digits_currency }}</td>
+            <td>{{ phone.screen_size }} inches</td>
+            <td>{{ phone.is_available|yesno:"موجود,ناموجود" }}</td>
+            <td>{{ phone.country_of_manufacture }}</td>
+            <td>
+                {% if phone.image %}
+                    <img src="{{ phone.image.url }}" alt="Image of {{ phone.model }}"
+                         style="max-width: 100px; max-height: 100px;">
+                {% else %}
+                    No Image Available
+                {% endif %}
+            </td>
+        </tr>
+    {% empty %}
+        {#        <tr>#}
+        {#            <div class="alert alert-warning">#}
+        {#                <p>هیچ محصولی یافت نشد</p>#}
+        {#            </div>#}
+        {#        </tr>#}
+        <tr>
+            <td colspan="9" style="text-align: center;">
+                <div class="alert alert-warning">
+                    <p>هیچ محصولی یافت نشد</p>
+                </div>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+</body>
+</html>

@@ -1,0 +1,105 @@
+{% load static %}
+{% load custom_filters %}
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>افزودن موبایل</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href='{% static 'css/styles.css' %}'>
+</head>
+<body>
+<div class="container mt-5">
+    <h2 class="text-center mb-4">افزودن اطلاعات موبایل</h2>
+
+    <form method="post" enctype="multipart/form-data" class="bg-light p-4 rounded shadow" novalidate>
+        {% csrf_token %}
+
+        <div class="form-group text-right">
+            {{ form.model.label_tag }}
+            {{ form.model|add_class:"form-control" }}
+            {% if form.model.errors %}
+                <div class="alert alert-danger mt-2 error-message">
+                    {{ form.model.errors }}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="form-group text-right">
+            {{ form.brand.label_tag }}
+            {{ form.brand|add_class:"form-control" }}
+            {% if form.brand.errors %}
+                <div class="alert alert-danger mt-2 error-message">
+                    {{ form.brand.errors }}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="form-group text-right">
+            {{ form.color.label_tag }}
+            {{ form.color|add_class:"form-control" }}
+            {% if form.color.errors %}
+                <div class="alert alert-danger mt-2 error-message">
+                    {{ form.color.errors }}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="form-group text-right">
+            {{ form.country_of_manufacture.label_tag }}
+            {{ form.country_of_manufacture|add_class:"form-control" }}
+            {% if form.country_of_manufacture.errors %}
+                <div class="alert alert-danger mt-2 error-message">
+                    {{ form.country_of_manufacture.errors }}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="form-group text-right">
+            {{ form.price.label_tag }}
+            {{ form.price|add_class:"form-control" }}
+            {% if form.price.errors %}
+                <div class="alert alert-danger mt-2 error-message">
+                    {{ form.price.errors }}
+                </div>
+            {% endif %}
+        </div>
+
+
+        <div class="form-group text-right">
+            {{ form.screen_size.label_tag }}
+            {{ form.screen_size|add_class:"form-control" }}
+            {% if form.screen_size.errors %}
+                <div class="alert alert-danger mt-2 error-message">
+                    {{ form.screen_size.errors }}
+                </div>
+            {% endif %}
+        </div>
+
+
+        <div class="form-group text-right">
+            {{ form.image.label_tag }}
+            {{ form.image }}
+            {% if form.image.errors %}
+                <div class="alert alert-danger mt-2 error-message">
+                    {{ form.image.errors }}
+                </div>
+            {% endif %}
+        </div>
+
+
+        <div class="form-group form-check text-right">
+            {{ form.is_available }}
+            {{ form.is_available.label_tag }}
+            {% if form.is_available.errors %}
+                <div class="alert alert-danger mt-2 error-message">
+                    {{ form.is_available.errors }}
+                </div>
+            {% endif %}
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block">ارسال</button>
+    </form>
+</div>
+</body>
+</html>
