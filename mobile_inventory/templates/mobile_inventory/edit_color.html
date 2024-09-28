@@ -1,0 +1,32 @@
+{% load static %}
+{% load custom_filters %}
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ویرایش رنگ</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href='{% static 'css/styles.css' %}'>
+</head>
+<body>
+<div class="container mt-5">
+    <h2 class="text-center mb-4">ویرایش رنگ</h2>
+
+    <form method="post" enctype="multipart/form-data" class="bg-light p-4 rounded shadow" novalidate>
+        {% csrf_token %}
+
+        <div class="form-group text-right">
+            {{ form.name.label_tag }}
+            {{ form.name|add_class:"form-control" }}
+            {% if form.name.errors %}
+                <div class="alert alert-danger mt-2 error-message">
+                    {{ form.name.errors }}
+                </div>
+            {% endif %}
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block">ذخیره تغییرات</button>
+    </form>
+</div>
+</body>
+</html>

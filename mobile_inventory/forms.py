@@ -7,17 +7,34 @@ class BrandForm(forms.ModelForm):
         model = Brand
         fields = ['name', 'nationality']
 
+    error_messages = {
+        'brand': {
+            'required': 'برند الزامی لدلب.',
+            'invalid': 'این رنگ از قبل موجود است.'
+        }}
+
 
 class CountryForm(forms.ModelForm):
     class Meta:
         model = Country
         fields = ['name']
 
+    error_messages = {
+        'country': {
+            'required': 'کشور الزامی است.',
+        }}
+
 
 class ColorForm(forms.ModelForm):
     class Meta:
         model = Color
         fields = ['name']
+        error_messages = {
+            'name': {
+                'required': 'رنگ الزامی است.',
+                'unique': 'این رنگ  وجود دارد.'
+            }
+        }
 
 
 class PhoneForm(forms.ModelForm):

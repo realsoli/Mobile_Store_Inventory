@@ -24,28 +24,28 @@
 <table border="1" style="width: 100%; border-collapse: collapse;">
     <thead>
     <tr>
-        <th>برند</th>
-        <th>مدل</th>
-        <th>ملیت برند</th>
-        <th>رنگ</th>
-        <th>قیمت</th>
-        <th>سایز صفحه نمایش</th>
-        <th>وضعیت</th>
-        <th>کشور سازنده</th>
-        <th>تصویر</th>
+        <th><a href="{% url 'add_brand' %}"><h3>برند</h3></a></th>
+        <th><h3>مدل</h3></th>
+        <th><a href="{% url 'add_brand' %}"><h3>ملیت برند</h3></a></th>
+        <th><a href="{% url 'add_color' %}"><h3>رنگ</h3></a></th>
+        <th><h3>قیمت</h3></th>
+        <th><h3>سایز صفحه نمایش</h3></th>
+        <th><h3>وضعیت</h3></th>
+        <th><a href="{% url 'add_country' %}"><h3>کشور سازنده</h3></a></th>
+        <th><h3>تصویر</h3></th>
     </tr>
     </thead>
     <tbody>
     {% for phone in phones %}
         <tr>
-            <td>{{ phone.brand.name }}</td>
+            <td><a href="{% url 'edit_brand' phone.brand.id %}">{{ phone.brand.name }}</a></td>
             <td>{{ phone.model }}</td>
-            <td>{{ phone.brand.nationality }}</td>
-            <td>{{ phone.color.name }}</td>
+            <td><a href="{% url 'edit_brand' phone.brand.id %}">{{ phone.brand.nationality }}</a></td>
+           <td><a href="{% url 'edit_color' phone.color.id %}">{{ phone.color.name }}</a></td>
             <td>{{ phone.price|three_digits_currency }}</td>
             <td>{{ phone.screen_size }} inches</td>
             <td>{{ phone.is_available|yesno:"موجود,ناموجود" }}</td>
-            <td>{{ phone.country_of_manufacture }}</td>
+            <td><a href="{% url 'edit_country' phone.country_of_manufacture.id %}">{{ phone.country_of_manufacture.name }}</a></td>
             <td>
                 {% if phone.image %}
                     <img src="{{ phone.image.url }}" alt="Image of {{ phone.model }}"

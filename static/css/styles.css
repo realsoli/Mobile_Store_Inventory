@@ -77,5 +77,21 @@ tr:hover {
 }
 
 .error-message {
-    /*display: inline-block; !* نمایش به صورت بلوکی *!*/
+    /*border: 1px solid #dc3545; !* رنگ حاشیه قرمز *!*/
+    background-color: #f8d7da; /* پس‌زمینه قرمز کمرنگ */
+    color: #721c24; /* رنگ متن */
+    padding: 8px 12px; /* فاصله داخلی */
+    border-radius: 5px; /* گوشه‌های گرد */
+    font-family: 'Arial', sans-serif; /* انتخاب فونت */
+    font-size: 18px; /* اندازه فونت */
+    margin-top: 5px; /* فاصله از بالای کادر */
+    /*width: fit-content; !* اندازه کادر بر اساس محتوا *!*/
+}
+
+a {
+    text-decoration: none; /* خط زیر لینک را حذف می‌کند */
+}
+
+a:hover {
+    text-decoration: underline; /* در حالت hover خط زیر لینک را برمی‌گرداند */
 }
