@@ -1,10 +1,57 @@
-<!DOCTYPE html>
-<html lang="en">
+{% load static %}
+{% load custom_filters %}
+<html lang="fa">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>افزودن رنگ</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href='{% static 'css/styles.css' %}'>
 </head>
 <body>
+<div class="container mt-5">
+    <h2 class="text-center mb-4">افزودن رنگ </h2>
 
+    <form method="post" enctype="multipart/form-data" class="bg-light p-4 rounded shadow" novalidate>
+        {% csrf_token %}
+
+        <div class="form-group text-right">
+            {{ form.name.label_tag }}
+            {{ form.name|add_class:"form-control" }}
+            {% if form.name.errors %}
+                <div class="alert alert-danger mt-2 error-message">
+                    {{ form.name.errors }}
+                </div>
+            {% endif %}
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block">ارسال</button>
+    </form>
+
+   <h3 class="mt-5 text-center">لیست رنگ‌ها</h3> <!-- مرکز چین کردن عنوان -->
+
+<table class="table mt-3">
+    <thead>
+    <tr>
+        <th>رنگ</th>
+        <th class="text-right">عملیات</th> <!-- تنظیم سلول عملیات به سمت راست -->
+    </tr>
+    </thead>
+    <tbody class="text-center"> <!-- اضافه کردن کلاس text-center برای مرکز چین کردن محتویات جدول -->
+    {% for color in colors %}
+        <tr>
+            <td>{{ color.name }}</td>
+            <td class="text-right"> <!-- سلول عملیات به سمت راست -->
+                <a href="{% url 'edit_color' color.id %}" class="btn btn-warning btn-sm">ویرایش</a>
+                <a href="{% url 'delete_color' color.id %}" class="btn btn-danger btn-sm">حذف</a>
+            </td>
+        </tr>
+    {% empty %}
+        <tr>
+            <td colspan="2" class="text-center">هیچ رنگی موجود نیست</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+</div>
 </body>
-</html>
