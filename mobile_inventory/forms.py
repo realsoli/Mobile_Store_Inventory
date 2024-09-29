@@ -8,9 +8,9 @@ class BrandForm(forms.ModelForm):
         fields = ['name', 'nationality']
 
     error_messages = {
-        'brand': {
+        'name': {
             'required': 'برند الزامی لدلب.',
-            'invalid': 'این رنگ از قبل موجود است.'
+            'unique': 'این برند از قبل موجود است.'
         }}
 
 
@@ -57,6 +57,7 @@ class PhoneForm(forms.ModelForm):
             },
             'price': {
                 'required': 'قیمت الزامی است.',
+
             },
             'image': {
                 'required': 'تصویر الزامی است.',
