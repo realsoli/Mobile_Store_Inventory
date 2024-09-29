@@ -11,7 +11,13 @@
 <body>
 <div class="container mt-5">
     <h2 class="text-center mb-4">افزودن برند</h2>
-
+    {% if request.user.is_superuser %}
+        <!-- دکمه افزودن محصول -->
+        <div class="text-right mb-3">
+            <a href="{% url 'add_phone' %}" class="btn btn-primary">افزودن محصول</a>
+            <a href="{% url 'list_phone' %}" class="btn btn-primary">لیست محصولات</a>
+        </div>
+    {% endif %}
     <form method="post" enctype="multipart/form-data" class="bg-light p-4 rounded shadow" novalidate>
         {% csrf_token %}
 
