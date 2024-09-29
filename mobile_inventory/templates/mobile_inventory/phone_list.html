@@ -1,86 +1,85 @@
+{% extends 'base.html' %}
 {% load static %}
 {% load custom_filters %}
-<html lang="fa">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لیست موبایل‌ها</title>
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-</head>
-<body>
-<h1>لیست موبایل‌ها</h1>
+{% block title %}لیست محصولات{% endblock %}
+{% block main %}
 
-<!-- فرم جستجو -->
-<form method="get" class="search-form">
-    <input type="text" name="query" id="query" value="{{ request.GET.query|default:'' }}" class="search-input"
-           placeholder="جستجوی گوشی...">
-    <button type="submit" class="search-button">جستجو</button>
-</form>
+    <body>
+    <h1>لیست موبایل‌ها</h1>
 
-{% if request.user.is_superuser %}
-    <!-- دکمه افزودن محصول -->
-  <h2><b> <a href="{% url 'add_phone' %}" class="btn btn-primary">افزودن محصول</a></b> </h2>
-{% endif %}
+    <!-- فرم جستجو -->
+    <form method="get" class="search-form">
+        <input type="text" name="query" id="query" value="{{ request.GET.query|default:'' }}" class="search-input"
+               placeholder="جستجوی گوشی...">
+        <button type="submit" class="search-button">جستجو</button>
+    </form>
 
-<!-- جدول نمایش موبایل‌ها -->
-<table border="1" style="width: 100%; border-collapse: collapse;">
-    <thead>
-    <tr>
-        <th><a href="{% url 'add_brand' %}"><h3>برند</h3></a></th>
-        <th><h3>مدل</h3></th>
-        <th><a href="{% url 'add_brand' %}"><h3>ملیت برند</h3></a></th>
-        <th><a href="{% url 'add_color' %}"><h3>رنگ</h3></a></th>
-        <th><h3>قیمت</h3></th>
-        <th><h3>سایز صفحه نمایش</h3></th>
-        <th><h3>وضعیت</h3></th>
-        <th><a href="{% url 'add_country' %}"><h3>کشور سازنده</h3></a></th>
-        <th><h3>تصویر</h3></th>
-        <th><h3>عملیات</h3></th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for phone in phones %}
+    {% if request.user.is_superuser %}
+        <!-- دکمه افزودن محصول -->
+        <div class="text-right mb-3">
+            <a href="{% url 'add_phone' %}" class="btn btn-primary">افزودن محصول</a>
+        </div>
+    {% endif %}
+
+    <!-- جدول نمایش موبایل‌ها -->
+    <table border="1" style="width: 100%; border-collapse: collapse;">
+        <thead>
         <tr>
-            <td>{{ phone.brand.name }}</td>
-            <td>{{ phone.model }}</td>
-            <td>{{ phone.brand.nationality }}</td>
-            <td>{{ phone.color.name }}</td>
-            <td>{{ phone.price|three_digits_currency }}</td>
-            <td>{{ phone.screen_size }} inches</td>
-            <td>{{ phone.is_available|yesno:"موجود,ناموجود" }}</td>
-            <td>{{ phone.country_of_manufacture.name }}</td>
-            <td>
-                {% if phone.image %}
-                    <img src="{{ phone.image.url }}" alt="Image of {{ phone.model }} "
-                         style="max-width: 100px; max-height: 100px;">
-                {% else %}
-                    تصویری موجود نیست.
-                {% endif %}
-            </td>
-            <!-- دکمه‌های ویرایش و حذف -->
-            <td>
-                <div class="btn-group" role="group" aria-label="Basic example">
-                    <a href="{% url 'edit_phone' phone.id %}" class="btn btn-sm btn-warning">
-                        <i class="fas fa-edit"></i> ویرایش
-                    </a>
-                    <a href="{% url 'delete_phone' phone.id %}" class="btn btn-sm btn-danger">
-                        <i class="fas fa-trash-alt"></i> حذف
-                    </a>
-                </div>
-            </td>
+            <th><a href="{% url 'add_brand' %}"><h4>برند</h4></a></th>
+            <th><h4>مدل</h4></th>
+            <th><a href="{% url 'add_brand' %}"><h4>ملیت برند</h4></a></th>
+            <th><a href="{% url 'add_color' %}"><h4>رنگ</h4></a></th>
+            <th><h4>قیمت</h4></th>
+            <th><h4>سایز صفحه نمایش</h4></th>
+            <th><h4>وضعیت</h4></th>
+            <th><a href="{% url 'add_country' %}"><h4>کشور سازنده</h4></a></th>
+            <th><h4>تصویر</h4></th>
+            <th><h4>عملیات</h4></th>
         </tr>
-    {% empty %}
-        <tr>
-            <td colspan="10" style="text-align: center;">
-                <div class="alert alert-warning">
-                    <p>هیچ محصولی یافت نشد</p>
-                </div>
-            </td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+        {% for phone in phones %}
+            <tr>
+                <td>{{ phone.brand.name }}</td>
+                <td>{{ phone.model }}</td>
+                <td>{{ phone.brand.nationality }}</td>
+                <td>{{ phone.color.name }}</td>
+                <td>{{ phone.price|three_digits_currency }}</td>
+                <td>{{ phone.screen_size }} inches</td>
+                <td>{{ phone.is_available|yesno:"موجود,ناموجود" }}</td>
+                <td>{{ phone.country_of_manufacture.name }}</td>
+                <td>
+                    {% if phone.image %}
+                        <img src="{{ phone.image.url }}" alt="Image of {{ phone.model }} "
+                             style="max-width: 100px; max-height: 100px;">
+                    {% else %}
+                        تصویری موجود نیست.
+                    {% endif %}
+                </td>
+                <!-- دکمه‌های ویرایش و حذف -->
+                <td>
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <a href="{% url 'edit_phone' phone.id %}" class="btn btn-sm btn-warning">
+                            <i class="fas fa-edit"></i> ویرایش
+                        </a>
+                        <a href="{% url 'delete_phone' phone.id %}" class="btn btn-sm btn-danger mr-2">
+                            <i class="fas fa-trash-alt"></i> حذف
+                        </a>
+                    </div>
+                </td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="10" style="text-align: center;">
+                    <div class="alert alert-warning">
+                        <p>هیچ محصولی یافت نشد</p>
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 
-</body>
-</html>
+    </body>
+    </html>
+{% endblock %}

@@ -1,13 +1,12 @@
+{% extends 'base.html' %}
 {% load static %}
-{% load custom_filters%}
+{% load custom_filters %}
 <html lang="fa">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>حذف محصول</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href='{% static 'css/styles.css' %}'>
-</head>
+{% block title %}
+    حذف محصول
+{% endblock %}
+
+{% block main %}
 <body>
 <div class="container mt-5">
     <h2 class="text-center mb-4">آیا مطمئن هستید که می‌خواهید این محصول را حذف کنید؟</h2>
@@ -15,8 +14,9 @@
     <form method="post" class="bg-light p-4 rounded shadow">
         {% csrf_token %}
         <button type="submit" class="btn btn-danger btn-block">حذف</button>
-        <a href="{% url 'add_brand' %}" class="btn btn-secondary btn-block">لغو</a>
+        <a href="{% url 'list_phone' %}" class="btn btn-secondary btn-block">لغو</a>
     </form>
 </div>
 </body>
 </html>
+{% endblock %}

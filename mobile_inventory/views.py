@@ -34,13 +34,14 @@ class AddPhoneView(CreateView):
     success_url = reverse_lazy('list_phone')  # آدرس صفحه بعد از ذخیره موفق
 
     def dispatch(self, *args, **kwargs):
-        # بررسی اینکه حداقل یک برند، رنگ و کشور در دیتابیس وجود داشته باشد
-        if not Brand.objects.exists():
-            return redirect('add_brand')  # اگر یکی از آن‌ها وجود نداشت، به صفحه افزودن برند بازگردانده شود
-        if not Color.objects.exists():
-            return redirect('add_color')
-        if not Country.objects.exists():
-            return redirect('add_country')
+        if not (Brand.objects.exists() and Color.objects.exists() and Country.objects.exists()):
+            # بازگشت به صفحات مورد نظر
+            if not Brand.objects.exists():
+                return redirect('add_brand')
+            if not Color.objects.exists():
+                return redirect('add_color')
+            if not Country.objects.exists():
+                return redirect('add_country')
         return super().dispatch(*args, **kwargs)
 
 
@@ -63,7 +64,12 @@ class AddBrandView(CreateView):
     model = Brand
     form_class = BrandForm
     template_name = 'mobile_inventory/add_brand.html'
-    success_url = reverse_lazy('add_color')  # آدرس صفحه بعد از ذخیره موفق
+
+    def get_success_url(self):
+        next_url = self.request.GET.get('next')
+        if next_url:
+            return next_url
+        return reverse_lazy('add_brand')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -75,7 +81,12 @@ class EditBrandView(UpdateView):
     model = Brand
     form_class = BrandForm
     template_name = 'mobile_inventory/edit_brand.html'
-    success_url = reverse_lazy('add_brand')  # آدرس برگشت بعد از ویرایش
+
+    def get_success_url(self):
+        next_url = self.request.GET.get('next')
+        if next_url:
+            return next_url
+        return reverse_lazy('add_brand')
 
 
 class DeleteBrandView(DeleteView):
@@ -91,7 +102,12 @@ class AddColorView(CreateView):
     model = Color
     form_class = ColorForm
     template_name = 'mobile_inventory/add_color.html'
-    success_url = reverse_lazy('add_country')
+
+    def get_success_url(self):
+        next_url = self.request.GET.get('next')
+        if next_url:
+            return next_url
+        return reverse_lazy('add_color')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -103,7 +119,12 @@ class EditColorView(UpdateView):
     model = Color
     form_class = ColorForm
     template_name = 'mobile_inventory/edit_color.html'
-    success_url = reverse_lazy('add_color')  # آدرس برگشت بعد از ویرایش
+
+    def get_success_url(self):
+        next_url = self.request.GET.get('next')
+        if next_url:
+            return next_url
+        return reverse_lazy('add_color')
 
 
 class DeleteColorView(DeleteView):
@@ -119,7 +140,12 @@ class AddCountryView(CreateView):
     model = Country
     form_class = CountryForm
     template_name = 'mobile_inventory/add_country.html'
-    success_url = reverse_lazy('add_phone')
+
+    # success_url = reverse_lazy('add_phone')
+
+    def get_success_url(self):
+        next_url = self.request.GET.get('next', reverse_lazy('add_country'))  # بررسی پارامتر 'next'
+        return next_url
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -131,7 +157,12 @@ class EditCountryView(UpdateView):
     model = Country
     form_class = CountryForm
     template_name = 'mobile_inventory/edit_country.html'
-    success_url = reverse_lazy('add_country')
+
+    def get_success_url(self):
+        next_url = self.request.GET.get('next')
+        if next_url:
+            return next_url
+        return reverse_lazy('add_country')  # به‌دست آوردن شناسه کشور ویرایش شده
 
 
 class DeleteCountryView(DeleteView):
