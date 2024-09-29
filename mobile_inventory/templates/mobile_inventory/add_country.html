@@ -11,7 +11,13 @@
 <body>
 <div class="container mt-5">
     <h2 class="text-center mb-4">افزودن کشور </h2>
-
+    {% if request.user.is_superuser %}
+        <!-- دکمه افزودن محصول -->
+        <div class="text-right mb-3">
+            <a href="{% url 'add_phone' %}" class="btn btn-primary">افزودن محصول</a>
+            <a href="{% url 'list_phone' %}" class="btn btn-primary">لیست محصولات</a>
+        </div>
+    {% endif %}
     <form method="post" enctype="multipart/form-data" class="bg-light p-4 rounded shadow" novalidate>
         {% csrf_token %}
 
@@ -28,30 +34,30 @@
         <button type="submit" class="btn btn-primary btn-block">ارسال</button>
     </form>
 
-   <h3 class="mt-5 text-center">لیست کشورها</h3> <!-- مرکز چین کردن عنوان -->
+    <h3 class="mt-5 text-center">لیست کشورها</h3> <!-- مرکز چین کردن عنوان -->
 
-<table class="table mt-3">
-    <thead>
-    <tr>
-        <th>رنگ</th>
-        <th class="text-right">عملیات</th> <!-- تنظیم سلول عملیات به سمت راست -->
-    </tr>
-    </thead>
-    <tbody class="text-center"> <!-- اضافه کردن کلاس text-center برای مرکز چین کردن محتویات جدول -->
-    {% for country in countries %}
+    <table class="table mt-3">
+        <thead>
         <tr>
-            <td>{{ country.name }}</td>
-            <td class="text-right"> <!-- سلول عملیات به سمت راست -->
-                <a href="{% url 'edit_country' country.id %}" class="btn btn-warning btn-sm">ویرایش</a>
-                <a href="{% url 'delete_country' country.id %}" class="btn btn-danger btn-sm">حذف</a>
-            </td>
+            <th>رنگ</th>
+            <th class="text-right">عملیات</th> <!-- تنظیم سلول عملیات به سمت راست -->
         </tr>
-    {% empty %}
-        <tr>
-            <td colspan="2" class="text-center">هیچ کشوری موجود نیست</td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
+        </thead>
+        <tbody class="text-center"> <!-- اضافه کردن کلاس text-center برای مرکز چین کردن محتویات جدول -->
+        {% for country in countries %}
+            <tr>
+                <td>{{ country.name }}</td>
+                <td class="text-right"> <!-- سلول عملیات به سمت راست -->
+                    <a href="{% url 'edit_country' country.id %}" class="btn btn-warning btn-sm">ویرایش</a>
+                    <a href="{% url 'delete_country' country.id %}" class="btn btn-danger btn-sm">حذف</a>
+                </td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="2" class="text-center">هیچ کشوری موجود نیست</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 </div>
 </body>

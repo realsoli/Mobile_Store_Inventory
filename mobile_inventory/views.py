@@ -35,9 +35,26 @@ class AddPhoneView(CreateView):
 
     def dispatch(self, *args, **kwargs):
         # بررسی اینکه حداقل یک برند، رنگ و کشور در دیتابیس وجود داشته باشد
-        if not Brand.objects.exists() or not Color.objects.exists() or not Country.objects.exists():
+        if not Brand.objects.exists():
             return redirect('add_brand')  # اگر یکی از آن‌ها وجود نداشت، به صفحه افزودن برند بازگردانده شود
+        if not Color.objects.exists():
+            return redirect('add_color')
+        if not Country.objects.exists():
+            return redirect('add_country')
         return super().dispatch(*args, **kwargs)
+
+
+class EditPhoneView(UpdateView):
+    model = Phone
+    form_class = PhoneForm
+    template_name = 'mobile_inventory/edit_phone.html'
+    success_url = reverse_lazy('list_phone')
+
+
+class DeletePhoneView(DeleteView):
+    model = Phone
+    template_name = 'mobile_inventory/delete_phone.html'
+    success_url = reverse_lazy('list_phone')
 
 
 # -------------------------------------------------------------------

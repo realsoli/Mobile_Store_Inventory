@@ -6,21 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>لیست موبایل‌ها</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <body>
 <h1>لیست موبایل‌ها</h1>
 
+<!-- فرم جستجو -->
 <form method="get" class="search-form">
     <input type="text" name="query" id="query" value="{{ request.GET.query|default:'' }}" class="search-input"
            placeholder="جستجوی گوشی...">
     <button type="submit" class="search-button">جستجو</button>
 </form>
 
+{% if request.user.is_superuser %}
+    <!-- دکمه افزودن محصول -->
+  <h2><b> <a href="{% url 'add_phone' %}" class="btn btn-primary">افزودن محصول</a></b> </h2>
+{% endif %}
 
-{#{% if request.user.is_superuser %}#}
-{#    <a href="{% url 'add_phone' %}">افزودن محصول</a>#}
-{#{% endif %}#}
-
+<!-- جدول نمایش موبایل‌ها -->
 <table border="1" style="width: 100%; border-collapse: collapse;">
     <thead>
     <tr>
@@ -33,36 +36,43 @@
         <th><h3>وضعیت</h3></th>
         <th><a href="{% url 'add_country' %}"><h3>کشور سازنده</h3></a></th>
         <th><h3>تصویر</h3></th>
+        <th><h3>عملیات</h3></th>
     </tr>
     </thead>
     <tbody>
     {% for phone in phones %}
         <tr>
-            <td><a href="{% url 'edit_brand' phone.brand.id %}">{{ phone.brand.name }}</a></td>
+            <td>{{ phone.brand.name }}</td>
             <td>{{ phone.model }}</td>
-            <td><a href="{% url 'edit_brand' phone.brand.id %}">{{ phone.brand.nationality }}</a></td>
-           <td><a href="{% url 'edit_color' phone.color.id %}">{{ phone.color.name }}</a></td>
+            <td>{{ phone.brand.nationality }}</td>
+            <td>{{ phone.color.name }}</td>
             <td>{{ phone.price|three_digits_currency }}</td>
             <td>{{ phone.screen_size }} inches</td>
             <td>{{ phone.is_available|yesno:"موجود,ناموجود" }}</td>
-            <td><a href="{% url 'edit_country' phone.country_of_manufacture.id %}">{{ phone.country_of_manufacture.name }}</a></td>
+            <td>{{ phone.country_of_manufacture.name }}</td>
             <td>
                 {% if phone.image %}
-                    <img src="{{ phone.image.url }}" alt="Image of {{ phone.model }}"
+                    <img src="{{ phone.image.url }}" alt="Image of {{ phone.model }} "
                          style="max-width: 100px; max-height: 100px;">
                 {% else %}
-                    No Image Available
+                    تصویری موجود نیست.
                 {% endif %}
+            </td>
+            <!-- دکمه‌های ویرایش و حذف -->
+            <td>
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <a href="{% url 'edit_phone' phone.id %}" class="btn btn-sm btn-warning">
+                        <i class="fas fa-edit"></i> ویرایش
+                    </a>
+                    <a href="{% url 'delete_phone' phone.id %}" class="btn btn-sm btn-danger">
+                        <i class="fas fa-trash-alt"></i> حذف
+                    </a>
+                </div>
             </td>
         </tr>
     {% empty %}
-        {#        <tr>#}
-        {#            <div class="alert alert-warning">#}
-        {#                <p>هیچ محصولی یافت نشد</p>#}
-        {#            </div>#}
-        {#        </tr>#}
         <tr>
-            <td colspan="9" style="text-align: center;">
+            <td colspan="10" style="text-align: center;">
                 <div class="alert alert-warning">
                     <p>هیچ محصولی یافت نشد</p>
                 </div>
@@ -71,5 +81,6 @@
     {% endfor %}
     </tbody>
 </table>
+
 </body>
 </html>
