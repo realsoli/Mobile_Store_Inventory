@@ -7,6 +7,8 @@ from django.urls import reverse_lazy
 from django.http import JsonResponse
 from .models import Brand, Phone, Country, Color
 from .forms import BrandForm, PhoneForm, CountryForm, ColorForm
+from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.contrib import messages
 
 
 class PhoneListView(ListView):
@@ -33,6 +35,8 @@ class AddPhoneView(CreateView):
     template_name = 'mobile_inventory/add_phone.html'
     success_url = reverse_lazy('list_phone')  # آدرس صفحه بعد از ذخیره موفق
 
+    # permission_required = 'mobile_inventory.add_phone'
+
     def dispatch(self, *args, **kwargs):
         if not (Brand.objects.exists() and Color.objects.exists() and Country.objects.exists()):
             # بازگشت به صفحات مورد نظر
@@ -44,6 +48,10 @@ class AddPhoneView(CreateView):
                 return redirect('add_country')
         return super().dispatch(*args, **kwargs)
 
+    def form_valid(self, form):
+        messages.success(self.request, 'گوشی با موفقیت اضافه شد.')
+        return super().form_valid(form)
+
 
 class EditPhoneView(UpdateView):
     model = Phone
@@ -51,11 +59,19 @@ class EditPhoneView(UpdateView):
     template_name = 'mobile_inventory/edit_phone.html'
     success_url = reverse_lazy('list_phone')
 
+    def form_valid(self, form):
+        messages.success(self.request, 'گوشی با موفقیت ویرایش شد.')
+        return super().form_valid(form)
+
 
 class DeletePhoneView(DeleteView):
     model = Phone
     template_name = 'mobile_inventory/delete_phone.html'
     success_url = reverse_lazy('list_phone')
+
+    def delete(self, request, *args, **kwargs):
+        messages.success(request, 'گوشی با موفقیت حذف شد.')
+        return super().delete(request, *args, **kwargs)
 
 
 # -------------------------------------------------------------------
@@ -64,6 +80,10 @@ class AddBrandView(CreateView):
     model = Brand
     form_class = BrandForm
     template_name = 'mobile_inventory/add_brand.html'
+
+    def form_valid(self, form):
+        messages.success(self.request, 'برند با موفقیت اضافه شد.')
+        return super().form_valid(form)
 
     def get_success_url(self):
         next_url = self.request.GET.get('next')
@@ -82,6 +102,10 @@ class EditBrandView(UpdateView):
     form_class = BrandForm
     template_name = 'mobile_inventory/edit_brand.html'
 
+    def form_valid(self, form):
+        messages.success(self.request, 'برند با موفقیت ویرایش شد.')
+        return super().form_valid(form)
+
     def get_success_url(self):
         next_url = self.request.GET.get('next')
         if next_url:
@@ -92,7 +116,7 @@ class EditBrandView(UpdateView):
 class DeleteBrandView(DeleteView):
     model = Brand
     template_name = 'mobile_inventory/delete_brand.html'
-    success_url = reverse_lazy('add_brand')  # آدرس برگشت بعد از ویرایش
+    success_url = reverse_lazy('add_brand')  # آدرس برگشت بعد از حذف
 
 
 # ---------------------------------------------------------------
@@ -102,6 +126,10 @@ class AddColorView(CreateView):
     model = Color
     form_class = ColorForm
     template_name = 'mobile_inventory/add_color.html'
+
+    def form_valid(self, form):
+        messages.success(self.request, 'رنگ با موفقیت اضافه شد.')
+        return super().form_valid(form)
 
     def get_success_url(self):
         next_url = self.request.GET.get('next')
@@ -120,6 +148,10 @@ class EditColorView(UpdateView):
     form_class = ColorForm
     template_name = 'mobile_inventory/edit_color.html'
 
+    def form_valid(self, form):
+        messages.success(self.request, 'رنگ با موفقیت ویرایش شد.')
+        return super().form_valid(form)
+
     def get_success_url(self):
         next_url = self.request.GET.get('next')
         if next_url:
@@ -132,6 +164,10 @@ class DeleteColorView(DeleteView):
     template_name = 'mobile_inventory/delete_color.html'
     success_url = reverse_lazy('add_color')
 
+    def delete(self, request, *args, **kwargs):
+        messages.success(request, 'رنگ با موفقیت حذف شد.')
+        return super().delete(request, *args, **kwargs)
+
 
 # -------------------------------------------------------------------
 
@@ -142,6 +178,9 @@ class AddCountryView(CreateView):
     template_name = 'mobile_inventory/add_country.html'
 
     # success_url = reverse_lazy('add_phone')
+    def form_valid(self, form):
+        messages.success(self.request, 'کشور با موفقیت اضافه شد.')
+        return super().form_valid(form)
 
     def get_success_url(self):
         next_url = self.request.GET.get('next', reverse_lazy('add_country'))  # بررسی پارامتر 'next'
@@ -158,6 +197,10 @@ class EditCountryView(UpdateView):
     form_class = CountryForm
     template_name = 'mobile_inventory/edit_country.html'
 
+    def form_valid(self, form):
+        messages.success(self.request, 'کشور با موفقیت ویرایش شد.')
+        return super().form_valid(form)
+
     def get_success_url(self):
         next_url = self.request.GET.get('next')
         if next_url:
@@ -169,3 +212,7 @@ class DeleteCountryView(DeleteView):
     model = Country
     template_name = 'mobile_inventory/delete_country.html'
     success_url = reverse_lazy('add_country')
+
+    def delete(self, request, *args, **kwargs):
+        messages.success(request, 'کشور با موفقیت حذف شد.')
+        return super().delete(request, *args, **kwargs)
