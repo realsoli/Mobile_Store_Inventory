@@ -20,9 +20,9 @@
             <a href="{% url 'add_phone' %}" class="btn btn-primary">افزودن محصول</a>
         </div>
     {% endif %}
-
+    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
     <!-- جدول نمایش موبایل‌ها -->
-    <table border="1" style="width: 100%; border-collapse: collapse;">
+    <table id="phones-table" border="1" style="width: 100%; border-collapse: collapse;">
         <thead>
         <tr>
             <th><a href="{% url 'add_brand' %}"><h4>برند</h4></a></th>
@@ -39,7 +39,7 @@
         </thead>
         <tbody>
         {% for phone in phones %}
-            <tr>
+            <tr id="phone-row-{{ phone.id }}">
                 <td>{{ phone.brand.name }}</td>
                 <td>{{ phone.model }}</td>
                 <td>{{ phone.brand.nationality }}</td>
@@ -50,7 +50,7 @@
                 <td>{{ phone.country_of_manufacture.name }}</td>
                 <td>
                     {% if phone.image %}
-                        <img src="{{ phone.image.url }}" alt="Image of {{ phone.model }} "
+                        <img src="{{ phone.image.url }}" alt="Image of {{ phone.model }}"
                              style="max-width: 100px; max-height: 100px;">
                     {% else %}
                         تصویری موجود نیست.
@@ -59,10 +59,11 @@
                 <!-- دکمه‌های ویرایش و حذف -->
                 <td>
                     <div class="btn-group" role="group" aria-label="Basic example">
-                        <a href="{% url 'edit_phone' phone.id %}" class="btn btn-sm btn-warning">
+                        <a href="{% url 'edit_phone' phone.id %}" class="btn btn-sm btn-warning ml-2">
                             <i class="fas fa-edit"></i> ویرایش
                         </a>
-                        <a href="{% url 'delete_phone' phone.id %}" class="btn btn-sm btn-danger mr-2">
+
+                        <a href="#" class="btn btn-sm btn-danger delete-phone" data-id="{{ phone.id }}">
                             <i class="fas fa-trash-alt"></i> حذف
                         </a>
                     </div>
@@ -81,5 +82,5 @@
     </table>
 
     </body>
-    </html>
+
 {% endblock %}
