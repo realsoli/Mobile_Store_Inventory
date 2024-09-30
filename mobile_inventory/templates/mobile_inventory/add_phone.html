@@ -126,7 +126,8 @@
             </div>
 
             <div class="form-group text-right">
-                {{ form.slug.label_tag }}
+
+                {{ form.slug.label_tag }} <l>(اختیاری)</l>
                 {{ form.slug|add_class:"form-control" }}
                 {% if form.slug.errors %}
                     <div class="alert alert-danger mt-2 error-message">
