@@ -15,9 +15,10 @@ class PhoneListView(ListView):
     model = Phone
     template_name = 'mobile_inventory/phone_list.html'
     context_object_name = 'phones'
+    ordering = ['-created_at']
 
     def get_queryset(self):
-        queryset = Phone.objects.all()
+        queryset = Phone.objects.all().order_by('-created_at')
 
         query = self.request.GET.get('query', None)
         if query:
@@ -37,21 +38,6 @@ class AddPhoneView(CreateView):
 
     # permission_required = 'mobile_inventory.add_phone'
 
-    def dispatch(self, *args, **kwargs):
-        if not (Brand.objects.exists() and Color.objects.exists() and Country.objects.exists()):
-            # بازگشت به صفحات مورد نظر
-            if not Brand.objects.exists():
-                return redirect('add_brand')
-            if not Color.objects.exists():
-                return redirect('add_color')
-            if not Country.objects.exists():
-                return redirect('add_country')
-        return super().dispatch(*args, **kwargs)
-
-    def form_valid(self, form):
-        messages.success(self.request, 'گوشی با موفقیت اضافه شد.')
-        return super().form_valid(form)
-
 
 class EditPhoneView(UpdateView):
     model = Phone
@@ -68,10 +54,6 @@ class DeletePhoneView(DeleteView):
     model = Phone
     template_name = 'mobile_inventory/delete_phone.html'
     success_url = reverse_lazy('list_phone')
-
-    def delete(self, request, *args, **kwargs):
-        messages.success(request, 'گوشی با موفقیت حذف شد.')
-        return super().delete(request, *args, **kwargs)
 
 
 # -------------------------------------------------------------------
@@ -93,7 +75,7 @@ class AddBrandView(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['brands'] = Brand.objects.all()  # اضافه کردن لیست برند ها به context
+        context['brands'] = Brand.objects.all().order_by('-created_at')  # اضافه کردن لیست برند ها به context
         return context
 
 
@@ -139,7 +121,7 @@ class AddColorView(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['colors'] = Color.objects.all()  # اضافه کردن لیست رنگ‌ها به context
+        context['colors'] = Color.objects.all().order_by('-created_at')  # اضافه کردن لیست رنگ‌ها به context
         return context
 
 
@@ -164,10 +146,6 @@ class DeleteColorView(DeleteView):
     template_name = 'mobile_inventory/delete_color.html'
     success_url = reverse_lazy('add_color')
 
-    def delete(self, request, *args, **kwargs):
-        messages.success(request, 'رنگ با موفقیت حذف شد.')
-        return super().delete(request, *args, **kwargs)
-
 
 # -------------------------------------------------------------------
 
@@ -188,7 +166,7 @@ class AddCountryView(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['countries'] = Country.objects.all()
+        context['countries'] = Country.objects.all().order_by('-created_at')
         return context
 
 
@@ -212,7 +190,3 @@ class DeleteCountryView(DeleteView):
     model = Country
     template_name = 'mobile_inventory/delete_country.html'
     success_url = reverse_lazy('add_country')
-
-    def delete(self, request, *args, **kwargs):
-        messages.success(request, 'کشور با موفقیت حذف شد.')
-        return super().delete(request, *args, **kwargs)

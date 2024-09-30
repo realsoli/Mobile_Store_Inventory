@@ -1,3 +1,36 @@
+// نمایش پیش‌نمایش تصویر
+$(document).ready(function () {
+    // نمایش پیش‌نمایش تصویر
+    document.getElementById('imageInput').onchange = function (e) {
+        const reader = new FileReader();
+        reader.onload = function (event) {
+            const imgElement = document.getElementById('imagePreview');
+            imgElement.src = event.target.result;
+            imgElement.style.display = 'block';
+        };
+        reader.readAsDataURL(e.target.files[0]);
+    };
+
+    // وقتی گزینه برند تغییر کند
+    $('#id_brand').change(function () {
+        var brandId = $(this).val(); // شناسه برند انتخاب شده
+        $('#editBrandLink').attr('href', '/edit-brand/' + brandId + '/?next=' + window.location.pathname);
+    });
+
+    // وقتی گزینه رنگ تغییر کند
+    $('#id_color').change(function () {
+        var colorId = $(this).val(); // شناسه رنگ انتخاب شده
+        $('#editColorLink').attr('href', '/edit-color/' + colorId + '/?next=' + window.location.pathname);
+    });
+
+    // وقتی گزینه کشور تغییر کند
+    $('#id_country_of_manufacture').change(function () {
+        var countryId = $(this).val(); // شناسه کشور انتخاب شده
+        $('#editCountryLink').attr('href', '/edit-country/' + countryId + '/?next=' + window.location.pathname);
+    });
+});
+
+// --------------------------------------Brand------------------------------------
 $(document).ready(function () {
     // دکمه حذف برند
     $('.delete-brand').click(function (e) {
@@ -30,13 +63,13 @@ $(document).ready(function () {
                         );
                         // حذف ردیف برند از جدول
                         $('#brand-row-' + brandId).remove();
-                         // بررسی اینکه آیا جدولی باقی نمانده است
+                        // بررسی اینکه آیا جدولی باقی نمانده است
                         if ($('#brands-table tbody tr').length === 0) {
                             $('#brands-table tbody').html(`
                                 <tr>
                                     <td colspan="10" style="text-align: center;">
                                         <div class="alert alert-warning">
-                                            <p>هیچ محصولی یافت نشد</p>
+                                            <p>هیچ برندی یافت نشد</p>
                                         </div>
                                     </td>
                                 </tr>
@@ -55,39 +88,9 @@ $(document).ready(function () {
         });
     });
 });
-// -----------------------------------
 
-// نمایش پیش‌نمایش تصویر
-$(document).ready(function () {
-    // نمایش پیش‌نمایش تصویر
-    document.getElementById('imageInput').onchange = function (e) {
-        const reader = new FileReader();
-        reader.onload = function (event) {
-            const imgElement = document.getElementById('imagePreview');
-            imgElement.src = event.target.result;
-            imgElement.style.display = 'block';
-        };
-        reader.readAsDataURL(e.target.files[0]);
-    };
 
-    // وقتی گزینه برند تغییر کند
-    $('#id_brand').change(function () {
-        var brandId = $(this).val(); // شناسه برند انتخاب شده
-        $('#editBrandLink').attr('href', '/edit-brand/' + brandId + '/?next=' + window.location.pathname);
-    });
-
-    // وقتی گزینه رنگ تغییر کند
-    $('#id_color').change(function () {
-        var colorId = $(this).val(); // شناسه رنگ انتخاب شده
-        $('#editColorLink').attr('href', '/edit-color/' + colorId + '/?next=' + window.location.pathname);
-    });
-
-    // وقتی گزینه کشور تغییر کند
-    $('#id_country_of_manufacture').change(function () {
-        var countryId = $(this).val(); // شناسه کشور انتخاب شده
-        $('#editCountryLink').attr('href', '/edit-country/' + countryId + '/?next=' + window.location.pathname);
-    });
-});
+// --------------------------------------Phones------------------------------------
 
 // دکمه حذف
 $(document).ready(function () {
@@ -149,7 +152,7 @@ $(document).ready(function () {
     });
 });
 
-
+// --------------------------------------Color------------------------------------
 $(document).ready(function () {
     // دکمه حذف رنگ
     $('.delete-color').click(function (e) {
@@ -183,13 +186,13 @@ $(document).ready(function () {
                         // حذف ردیف رنگ از جدول
                         $('#color-row-' + colorId).remove();
 
-                         // بررسی اینکه آیا جدولی باقی نمانده است
+                        // بررسی اینکه آیا جدولی باقی نمانده است
                         if ($('#colors-table tbody tr').length === 0) {
                             $('#colors-table tbody').html(`
                                 <tr>
                                     <td colspan="10" style="text-align: center;">
                                         <div class="alert alert-warning">
-                                            <p>هیچ محصولی یافت نشد</p>
+                                            <p>هیچ رنگی یافت نشد</p>
                                         </div>
                                     </td>
                                 </tr>
@@ -210,12 +213,14 @@ $(document).ready(function () {
     });
 });
 
+// --------------------------------------Country------------------------------------
+
 
 $(document).ready(function () {
-    // دکمه حذف رنگ
+    // دکمه حذف برند
     $('.delete-country').click(function (e) {
         e.preventDefault();
-        var countryId = $(this).data('id');  // دریافت شناسه رنگ
+        var countryId = $(this).data('id');  // دریافت شناسه برند
 
         Swal.fire({
             title: 'آیا مطمئن هستید؟',
@@ -243,21 +248,19 @@ $(document).ready(function () {
                         );
                         // حذف ردیف کشور از جدول
                         $('#country-row-' + countryId).remove();
-
-                         // بررسی اینکه آیا جدولی باقی نمانده است
+                        // بررسی اینکه آیا جدولی باقی نمانده است
                         if ($('#countries-table tbody tr').length === 0) {
                             $('#countries-table tbody').html(`
                                 <tr>
                                     <td colspan="10" style="text-align: center;">
                                         <div class="alert alert-warning">
-                                            <p>هیچ محصولی یافت نشد</p>
+                                            <p>هیچ کشوری یافت نشد</p>
                                         </div>
                                     </td>
                                 </tr>
                             `);
                         }
                     },
-
                     error: function (xhr, status, error) {
                         Swal.fire(
                             'خطا!',
