@@ -45,9 +45,9 @@ class EditPhoneView(UpdateView):
     template_name = 'mobile_inventory/edit_phone.html'
     success_url = reverse_lazy('list_phone')
 
-    def form_valid(self, form):
-        messages.success(self.request, 'گوشی با موفقیت ویرایش شد.')
-        return super().form_valid(form)
+    # def form_valid(self, form):
+    #     messages.success(self.request, 'گوشی با موفقیت ویرایش شد.')
+    #     return super().form_valid(form)
 
 
 class DeletePhoneView(DeleteView):
@@ -63,9 +63,9 @@ class AddBrandView(CreateView):
     form_class = BrandForm
     template_name = 'mobile_inventory/add_brand.html'
 
-    def form_valid(self, form):
-        messages.success(self.request, 'برند با موفقیت اضافه شد.')
-        return super().form_valid(form)
+    # def form_valid(self, form):
+    #     messages.success(self.request, 'برند با موفقیت اضافه شد.')
+    #     return super().form_valid(form)
 
     def get_success_url(self):
         next_url = self.request.GET.get('next')
@@ -84,9 +84,9 @@ class EditBrandView(UpdateView):
     form_class = BrandForm
     template_name = 'mobile_inventory/edit_brand.html'
 
-    def form_valid(self, form):
-        messages.success(self.request, 'برند با موفقیت ویرایش شد.')
-        return super().form_valid(form)
+    # def form_valid(self, form):
+    #     messages.success(self.request, 'برند با موفقیت ویرایش شد.')
+    #     return super().form_valid(form)
 
     def get_success_url(self):
         next_url = self.request.GET.get('next')
@@ -109,9 +109,9 @@ class AddColorView(CreateView):
     form_class = ColorForm
     template_name = 'mobile_inventory/add_color.html'
 
-    def form_valid(self, form):
-        messages.success(self.request, 'رنگ با موفقیت اضافه شد.')
-        return super().form_valid(form)
+    # def form_valid(self, form):
+    #     messages.success(self.request, 'رنگ با موفقیت اضافه شد.')
+    #     return super().form_valid(form)
 
     def get_success_url(self):
         next_url = self.request.GET.get('next')
@@ -130,9 +130,9 @@ class EditColorView(UpdateView):
     form_class = ColorForm
     template_name = 'mobile_inventory/edit_color.html'
 
-    def form_valid(self, form):
-        messages.success(self.request, 'رنگ با موفقیت ویرایش شد.')
-        return super().form_valid(form)
+    # def form_valid(self, form):
+    #     messages.success(self.request, 'رنگ با موفقیت ویرایش شد.')
+    #     return super().form_valid(form)
 
     def get_success_url(self):
         next_url = self.request.GET.get('next')
@@ -156,9 +156,9 @@ class AddCountryView(CreateView):
     template_name = 'mobile_inventory/add_country.html'
 
     # success_url = reverse_lazy('add_phone')
-    def form_valid(self, form):
-        messages.success(self.request, 'کشور با موفقیت اضافه شد.')
-        return super().form_valid(form)
+    # def form_valid(self, form):
+    #     messages.success(self.request, 'کشور با موفقیت اضافه شد.')
+    #     return super().form_valid(form)
 
     def get_success_url(self):
         next_url = self.request.GET.get('next', reverse_lazy('add_country'))  # بررسی پارامتر 'next'
@@ -175,9 +175,9 @@ class EditCountryView(UpdateView):
     form_class = CountryForm
     template_name = 'mobile_inventory/edit_country.html'
 
-    def form_valid(self, form):
-        messages.success(self.request, 'کشور با موفقیت ویرایش شد.')
-        return super().form_valid(form)
+    # def form_valid(self, form):
+    #     messages.success(self.request, 'کشور با موفقیت ویرایش شد.')
+    #     return super().form_valid(form)
 
     def get_success_url(self):
         next_url = self.request.GET.get('next')

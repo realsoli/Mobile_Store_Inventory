@@ -45,11 +45,11 @@
             </thead>
             <tbody>
             {% for country in countries %}
-                <tr id="country-row-{{ country.id }}">
+                <tr id="country-row-{{ country.slug }}">
                     <td>{{ country.name }}</td>
                     <td class="text-right">
-                        <a href="{% url 'edit_country' country.id %}" class="btn btn-warning btn-sm">ویرایش</a>
-                        <button class="btn btn-danger btn-sm delete-country" data-id="{{ country.id }}">حذف</button>
+                        <a href="{% url 'edit_country' country.slug %}" class="btn btn-warning btn-sm">ویرایش</a>
+                        <button class="btn btn-danger btn-sm delete-country" data-id="{{ country.slug }}">حذف</button>
                     </td>
                 </tr>
             {% empty %}

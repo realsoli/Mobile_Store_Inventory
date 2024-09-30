@@ -52,12 +52,13 @@
             </thead>
             <tbody>
                 {% for brand in brands %}
-                    <tr id="brand-row-{{ brand.id }}">
+                    <tr id="brand-row-{{ brand.slug }}">
                         <td>{{ brand.name }}</td>
                         <td>{{ brand.nationality }}</td>
                         <td class="text-right">
-                            <a href="{% url 'edit_brand' brand.id %}" class="btn btn-warning btn-sm">ویرایش</a>
-                            <button class="btn btn-danger btn-sm delete-brand" data-id="{{ brand.id }}">حذف</button>
+                            <a href="{% url 'edit_brand' brand.slug %}" class="btn btn-warning btn-sm">ویرایش</a>
+
+                            <button class="btn btn-danger btn-sm delete-brand" data-id="{{ brand.slug }}">حذف</button>
                         </td>
                     </tr>
                 {% empty %}

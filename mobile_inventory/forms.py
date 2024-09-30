@@ -5,7 +5,7 @@ from django import forms
 class BrandForm(forms.ModelForm):
     class Meta:
         model = Brand
-        fields = ['name', 'nationality']
+        fields = '__all__'
 
     error_messages = {
         'name': {
@@ -17,7 +17,7 @@ class BrandForm(forms.ModelForm):
 class CountryForm(forms.ModelForm):
     class Meta:
         model = Country
-        fields = ['name']
+        fields = '__all__'
 
     error_messages = {
         'country': {
@@ -28,7 +28,7 @@ class CountryForm(forms.ModelForm):
 class ColorForm(forms.ModelForm):
     class Meta:
         model = Color
-        fields = ['name']
+        fields = '__all__'
         error_messages = {
             'name': {
                 'required': 'رنگ الزامی است.',

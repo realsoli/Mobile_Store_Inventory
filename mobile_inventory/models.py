@@ -1,13 +1,22 @@
 from django.db import models
+from django.utils.text import slugify
+from unidecode import unidecode
 
 
 class Brand(models.Model):
     name = models.CharField(max_length=100, unique=True, verbose_name='نام برند')
     nationality = models.CharField(max_length=100, verbose_name='ملیت برند')
     created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    slug = models.SlugField(unique=True, blank=True, verbose_name='آدرس برند')
 
     def __str__(self):
         return f'{self.name}'
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            # استفاده از unidecode برای تبدیل حروف فارسی به لاتین
+            self.slug = slugify(unidecode(self.name))
+        super().save(*args, **kwargs)
 
     class Meta:
         verbose_name = 'برند'
@@ -17,9 +26,16 @@ class Brand(models.Model):
 class Color(models.Model):
     name = models.CharField(max_length=100, unique=True, verbose_name='رنگ')
     created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    slug = models.SlugField(unique=True, blank=True, verbose_name='آدرس رنگ')
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            # استفاده از unidecode برای تبدیل حروف فارسی به لاتین
+            self.slug = slugify(unidecode(self.name))
+        super().save(*args, **kwargs)
 
     class Meta:
         verbose_name = 'رنگ'
@@ -29,9 +45,16 @@ class Color(models.Model):
 class Country(models.Model):
     name = models.CharField(max_length=100, unique=True, verbose_name='نام کشور')
     created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    slug = models.SlugField(unique=True, blank=True, verbose_name='آدرس کشور')
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            # استفاده از unidecode برای تبدیل حروف فارسی به لاتین
+            self.slug = slugify(unidecode(self.name))
+        super().save(*args, **kwargs)
 
     class Meta:
         verbose_name = 'کشور'
@@ -48,10 +71,18 @@ class Phone(models.Model):
     screen_size = models.FloatField(verbose_name='سایز صفحه نمایش')
     is_available = models.BooleanField(default=True, verbose_name='موجود/ناموجود')
     created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    slug = models.SlugField(unique=True, blank=True, verbose_name='آدرس محصول')
 
     def __str__(self):
         availability = 'موجود' if self.is_available else 'ناموجود'
         return f"{self.brand.name} {self.model} - {availability}"
+
+    # تولید slug به صورت خودکار
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            # استفاده از unidecode برای تبدیل حروف فارسی به لاتین
+            self.slug = slugify(unidecode(self.model))
+        super().save(*args, **kwargs)
 
     class Meta:
         verbose_name = 'موبایل'

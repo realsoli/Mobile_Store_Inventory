@@ -24,6 +24,16 @@
                 {% endif %}
             </div>
 
+            <div class="form-group text-right">
+                {{ form.slug.label_tag }}
+                {{ form.slug|add_class:"form-control" }}
+                {% if form.slug.errors %}
+                    <div class="alert alert-danger mt-2 error-message">
+                        {{ form.slug.errors }}
+                    </div>
+                {% endif %}
+            </div>
+
             <button type="submit" class="btn btn-primary btn-block">ذخیره تغییرات</button>
         </form>
     </div>
