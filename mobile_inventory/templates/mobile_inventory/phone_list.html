@@ -13,14 +13,14 @@
                placeholder="جستجوی گوشی...">
         <button type="submit" class="search-button">جستجو</button>
     </form>
-
-    {% if request.user.is_superuser %}
-        <!-- دکمه افزودن محصول -->
-        <div class="text-right mb-3">
-            <a href="{% url 'add_phone' %}" class="btn btn-primary">افزودن محصول</a>
-        </div>
+    {% if request.user.is_authenticated %}
+        {% if request.user.is_superuser %}
+            <!-- دکمه افزودن محصول -->
+            <div class="text-right mb-3">
+                <a href="{% url 'add_phone' %}" class="btn btn-primary">افزودن محصول</a>
+            </div>
+        {% endif %}
     {% endif %}
-
     <!-- جدول نمایش موبایل‌ها -->
     <table border="1" style="width: 100%; border-collapse: collapse;">
         <thead>
