@@ -8,152 +8,163 @@
 {% block main %}
 
 
-<body>
-<div class="container mt-5">
-    <h2 class="text-center mb-4">ویرایش اطلاعات موبایل</h2>
+    <body>
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">ویرایش اطلاعات موبایل</h2>
 
-    <div class="text-right mb-3">
-        {% if request.user.is_superuser %}
-            <div class="text-right mb-3">
-                <a href="{% url 'add_phone' %}" class="btn btn-primary">افزودن محصول</a>
-                <a href="{% url 'list_phone' %}" class="btn btn-primary">لیست محصولات</a>
+        <div class="text-right mb-3">
+            {% if request.user.is_superuser %}
+                <div class="text-right mb-3">
+                    <a href="{% url 'add_phone' %}" class="btn btn-primary">افزودن محصول</a>
+                    <a href="{% url 'list_phone' %}" class="btn btn-primary">لیست محصولات</a>
+                </div>
+            {% endif %}
+        </div>
+
+        <form method="post" enctype="multipart/form-data" class="bg-light p-4 rounded shadow" novalidate>
+            {% csrf_token %}
+
+            <!-- مدل -->
+            <div class="form-group text-right">
+                {{ form.model.label_tag }}
+                {{ form.model|add_class:"form-control d-inline-block" }}
+                {% if form.model.errors %}
+                    <div class="alert alert-danger mt-2 error-message">
+                        {{ form.model.errors }}
+                    </div>
+                {% endif %}
             </div>
-        {% endif %}
+
+            <!-- برند -->
+            <div class="form-group text-right">
+                {{ form.brand.label_tag }}
+                <div class="input-group">
+                    {{ form.brand|add_class:"form-control" }}
+                    <div class="input-group-append">
+                        <a href="{% url 'add_brand' %}?next={{ request.path }}" class="btn btn-outline-success">افزودن
+                            برند</a>
+                        <a id="editBrandLink" href="{% url 'edit_brand' phone.brand.slug %}?next={{ request.path }}"
+                           class="btn btn-outline-primary mr-2">ویرایش برند</a>
+                    </div>
+                </div>
+                {% if form.brand.errors %}
+                    <div class="alert alert-danger mt-2 error-message">
+                        {{ form.brand.errors }}
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- رنگ -->
+            <div class="form-group text-right">
+                {{ form.color.label_tag }}
+                <div class="input-group">
+                    {{ form.color|add_class:"form-control" }}
+                    <div class="input-group-append">
+                        <a href="{% url 'add_color' %}?next={{ request.path }}" class="btn btn-outline-success">افزودن
+                            رنگ</a>
+                        <a id="editColorLink" href="{% url 'edit_color' phone.color.slug %}?next={{ request.path }}"
+                           class="btn btn-outline-primary mr-2">ویرایش رنگ</a>
+                    </div>
+                </div>
+                {% if form.color.errors %}
+                    <div class="alert alert-danger mt-2 error-message">
+                        {{ form.color.errors }}
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- کشور سازنده -->
+            <div class="form-group text-right">
+                {{ form.country_of_manufacture.label_tag }}
+                <div class="input-group">
+                    {{ form.country_of_manufacture|add_class:"form-control" }}
+                    <div class="input-group-append">
+                        <a href="{% url 'add_country' %}?next={{ request.path }}" class="btn btn-outline-success">افزودن
+                            کشور</a>
+                        <a id="editCountryLink"
+                           href="{% url 'edit_country' phone.country_of_manufacture.slug %}?next={{ request.path }}"
+                           class="btn btn-outline-primary mr-2">ویرایش کشور</a>
+                    </div>
+                </div>
+                {% if form.country_of_manufacture.errors %}
+                    <div class="alert alert-danger mt-2 error-message">
+                        {{ form.country_of_manufacture.errors }}
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- قیمت -->
+            <div class="form-group text-right">
+                {{ form.price.label_tag }}
+                {{ form.price|add_class:"form-control" }}
+                {% if form.price.errors %}
+                    <div class="alert alert-danger mt-2 error-message">
+                        {{ form.price.errors }}
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- اندازه صفحه نمایش -->
+            <div class="form-group text-right">
+                {{ form.screen_size.label_tag }}
+                {{ form.screen_size|add_class:"form-control" }}
+                {% if form.screen_size.errors %}
+                    <div class="alert alert-danger mt-2 error-message">
+                        {{ form.screen_size.errors }}
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- تصویر -->
+            <div class="form-group text-right">
+                {{ form.image.label_tag }}
+                <input type="file" name="image" id="imageInput" class="form-control">
+                {% if object.image %}
+                    <img id="imagePreview" src="{{ object.image.url }}" alt="پیش‌نمایش تصویر" style="max-height: 200px;"
+                         class="mt-3">
+                {% else %}
+                    <img id="imagePreview" src="#" alt="پیش‌نمایش تصویر" style="display:none; max-height: 200px;"
+                         class="mt-3">
+                {% endif %}
+                {% if form.image.errors %}
+                    <div class="alert alert-danger mt-2 error-message">
+                        {{ form.image.errors }}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="form-group text-right">
+                {{ form.slug.label_tag }}
+                {{ form.slug|add_class:"form-control" }}
+                {% if form.slug.errors %}
+                    <div class="alert alert-danger mt-2 error-message">
+                        {{ form.slug.errors }}
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- موجودیت -->
+            <div class="form-group form-check text-right">
+                {{ form.is_available }}
+                {{ form.is_available.label_tag }}
+                {% if form.is_available.errors %}
+                    <div class="alert alert-danger mt-2 error-message">
+                        {{ form.is_available.errors }}
+                    </div>
+                {% endif %}
+            </div>
+
+
+            <!-- دکمه ویرایش -->
+            <button type="submit" class="btn btn-success btn-block" style="transition: background-color 0.3s ease;">
+                ویرایش
+            </button>
+        </form>
     </div>
 
-    <form method="post" enctype="multipart/form-data" class="bg-light p-4 rounded shadow" novalidate>
-        {% csrf_token %}
 
-        <!-- مدل -->
-        <div class="form-group text-right">
-            {{ form.model.label_tag }}
-            {{ form.model|add_class:"form-control d-inline-block" }}
-            {% if form.model.errors %}
-                <div class="alert alert-danger mt-2 error-message">
-                    {{ form.model.errors }}
-                </div>
-            {% endif %}
-        </div>
+    {#{% include 'includes/js/script.html' %}#}
 
-        <!-- برند -->
-        <div class="form-group text-right">
-            {{ form.brand.label_tag }}
-            <div class="input-group">
-                {{ form.brand|add_class:"form-control" }}
-                <div class="input-group-append">
-                    <a href="{% url 'add_brand' %}?next={{ request.path }}" class="btn btn-outline-success">افزودن
-                        برند</a>
-                    <a id="editBrandLink" href="{% url 'edit_brand' phone.brand.id %}?next={{ request.path }}"
-                       class="btn btn-outline-primary mr-2">ویرایش برند</a>
-                </div>
-            </div>
-            {% if form.brand.errors %}
-                <div class="alert alert-danger mt-2 error-message">
-                    {{ form.brand.errors }}
-                </div>
-            {% endif %}
-        </div>
-
-        <!-- رنگ -->
-        <div class="form-group text-right">
-            {{ form.color.label_tag }}
-            <div class="input-group">
-                {{ form.color|add_class:"form-control" }}
-                <div class="input-group-append">
-                    <a href="{% url 'add_color' %}?next={{ request.path }}" class="btn btn-outline-success">افزودن
-                        رنگ</a>
-                    <a id="editColorLink" href="{% url 'edit_color' phone.color.id %}?next={{ request.path }}"
-                       class="btn btn-outline-primary mr-2">ویرایش رنگ</a>
-                </div>
-            </div>
-            {% if form.color.errors %}
-                <div class="alert alert-danger mt-2 error-message">
-                    {{ form.color.errors }}
-                </div>
-            {% endif %}
-        </div>
-
-        <!-- کشور سازنده -->
-        <div class="form-group text-right">
-            {{ form.country_of_manufacture.label_tag }}
-            <div class="input-group">
-                {{ form.country_of_manufacture|add_class:"form-control" }}
-                <div class="input-group-append">
-                    <a href="{% url 'add_country' %}?next={{ request.path }}" class="btn btn-outline-success">افزودن
-                        کشور</a>
-                    <a id="editCountryLink"
-                       href="{% url 'edit_country' phone.country_of_manufacture.id %}?next={{ request.path }}"
-                       class="btn btn-outline-primary mr-2">ویرایش کشور</a>
-                </div>
-            </div>
-            {% if form.country_of_manufacture.errors %}
-                <div class="alert alert-danger mt-2 error-message">
-                    {{ form.country_of_manufacture.errors }}
-                </div>
-            {% endif %}
-        </div>
-
-        <!-- قیمت -->
-        <div class="form-group text-right">
-            {{ form.price.label_tag }}
-            {{ form.price|add_class:"form-control" }}
-            {% if form.price.errors %}
-                <div class="alert alert-danger mt-2 error-message">
-                    {{ form.price.errors }}
-                </div>
-            {% endif %}
-        </div>
-
-        <!-- اندازه صفحه نمایش -->
-        <div class="form-group text-right">
-            {{ form.screen_size.label_tag }}
-            {{ form.screen_size|add_class:"form-control" }}
-            {% if form.screen_size.errors %}
-                <div class="alert alert-danger mt-2 error-message">
-                    {{ form.screen_size.errors }}
-                </div>
-            {% endif %}
-        </div>
-
-        <!-- تصویر -->
-        <div class="form-group text-right">
-            {{ form.image.label_tag }}
-            <input type="file" name="image" id="imageInput" class="form-control">
-            {% if object.image %}
-                <img id="imagePreview" src="{{ object.image.url }}" alt="پیش‌نمایش تصویر" style="max-height: 200px;"
-                     class="mt-3">
-            {% else %}
-                <img id="imagePreview" src="#" alt="پیش‌نمایش تصویر" style="display:none; max-height: 200px;"
-                     class="mt-3">
-            {% endif %}
-            {% if form.image.errors %}
-                <div class="alert alert-danger mt-2 error-message">
-                    {{ form.image.errors }}
-                </div>
-            {% endif %}
-        </div>
-
-        <!-- موجودیت -->
-        <div class="form-group form-check text-right">
-            {{ form.is_available }}
-            {{ form.is_available.label_tag }}
-            {% if form.is_available.errors %}
-                <div class="alert alert-danger mt-2 error-message">
-                    {{ form.is_available.errors }}
-                </div>
-            {% endif %}
-        </div>
-
-        <!-- دکمه ویرایش -->
-        <button type="submit" class="btn btn-success btn-block" style="transition: background-color 0.3s ease;">
-            ویرایش
-        </button>
-    </form>
-</div>
-
-
-{#{% include 'includes/js/script.html' %}#}
-
-</body>
+    </body>
 
 {% endblock %}

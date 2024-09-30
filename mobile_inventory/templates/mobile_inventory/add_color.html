@@ -39,11 +39,11 @@
             </thead>
             <tbody>
                 {% for color in colors %}
-                    <tr id="color-row-{{ color.id }}">
+                    <tr id="color-row-{{ color.slug }}">
                         <td>{{ color.name }}</td>
                         <td class="text-right">
-                            <a href="{% url 'edit_color' color.id %}" class="btn btn-warning btn-sm">ویرایش</a>
-                            <button class="btn btn-danger btn-sm delete-color" data-id="{{ color.id }}">حذف</button>
+                            <a href="{% url 'edit_color' color.slug %}" class="btn btn-warning btn-sm">ویرایش</a>
+                            <button class="btn btn-danger btn-sm delete-color" data-id="{{ color.slug }}">حذف</button>
                         </td>
                     </tr>
                 {% empty %}
