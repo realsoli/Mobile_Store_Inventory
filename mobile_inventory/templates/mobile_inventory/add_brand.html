@@ -5,25 +5,19 @@
     افزودن برند
 {% endblock %}
 {% block main %}
-
-
-
-    <body>
+<body>
     <div class="container mt-5">
         <h2 class="text-center mb-4">افزودن برند</h2>
         {% if request.user.is_superuser %}
-            <!-- دکمه افزودن محصول -->
+            <!-- دکمه‌های عملیات -->
             <div class="text-right mb-3">
                 <a href="{% url 'add_phone' %}" class="btn btn-primary">افزودن محصول</a>
                 <a href="{% url 'list_phone' %}" class="btn btn-primary">لیست محصولات</a>
             </div>
         {% endif %}
 
-
-
         <form method="post" enctype="multipart/form-data" class="bg-light p-4 rounded shadow" novalidate>
             {% csrf_token %}
-
             <div class="form-group text-right">
                 <label for="{{ form.name.id_for_label }}" class="font-weight-bold">نام برند</label>
                 {{ form.name|add_class:"form-control" }}
@@ -48,34 +42,31 @@
         </form>
 
         <h3 class="mt-5 text-center">لیست برندها</h3>
-        <table id='brands-table' class="table table-bordered mt-3 text-right">
+        <table id="brands-table" class="table table-bordered mt-3 text-right">
             <thead class="thead-light">
-            <tr>
-                <th>نام برند</th>
-                <th>ملیت</th>
-                <th class="text-right">عملیات</th>
-            </tr>
+                <tr>
+                    <th>نام برند</th>
+                    <th>ملیت</th>
+                    <th class="text-right">عملیات</th>
+                </tr>
             </thead>
             <tbody>
-            {% for brand in brands %}
-                <tr id="brand-row-{{ brand.id }}">
-                    <td>{{ brand.name }}</td>
-                    <td>{{ brand.nationality }}</td>
-                    <td class="text-right">
-                        <a href="{% url 'edit_brand' brand.id %}" class="btn btn-warning btn-sm">ویرایش</a>
-                        <button class="btn btn-danger btn-sm delete-brand" data-id="{{ brand.id }}">حذف</button>
-                    </td>
-                </tr>
-            {% empty %}
-                <tr>
-                    <td colspan="2" class="text-center alert alert-warning">هیچ برندی موجود نیست</td>
-                </tr>
-            {% endfor %}
+                {% for brand in brands %}
+                    <tr id="brand-row-{{ brand.id }}">
+                        <td>{{ brand.name }}</td>
+                        <td>{{ brand.nationality }}</td>
+                        <td class="text-right">
+                            <a href="{% url 'edit_brand' brand.id %}" class="btn btn-warning btn-sm">ویرایش</a>
+                            <button class="btn btn-danger btn-sm delete-brand" data-id="{{ brand.id }}">حذف</button>
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="3" class="text-center alert alert-warning">هیچ برندی موجود نیست</td>
+                    </tr>
+                {% endfor %}
             </tbody>
         </table>
     </div>
-
-
-    </body>
-
+</body>
 {% endblock %}

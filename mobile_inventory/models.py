@@ -4,9 +4,10 @@ from django.db import models
 class Brand(models.Model):
     name = models.CharField(max_length=100, unique=True, verbose_name='نام برند')
     nationality = models.CharField(max_length=100, verbose_name='ملیت برند')
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
 
     def __str__(self):
-        return self.name
+        return f'{self.name}'
 
     class Meta:
         verbose_name = 'برند'
@@ -15,6 +16,7 @@ class Brand(models.Model):
 
 class Color(models.Model):
     name = models.CharField(max_length=100, unique=True, verbose_name='رنگ')
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -26,6 +28,7 @@ class Color(models.Model):
 
 class Country(models.Model):
     name = models.CharField(max_length=100, unique=True, verbose_name='نام کشور')
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -44,6 +47,7 @@ class Phone(models.Model):
     image = models.ImageField(upload_to='phone_images', null=True, blank=True, verbose_name='تصویر')
     screen_size = models.FloatField(verbose_name='سایز صفحه نمایش')
     is_available = models.BooleanField(default=True, verbose_name='موجود/ناموجود')
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
 
     def __str__(self):
         availability = 'موجود' if self.is_available else 'ناموجود'

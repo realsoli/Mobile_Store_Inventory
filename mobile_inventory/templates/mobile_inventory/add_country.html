@@ -5,9 +5,10 @@
     افزودن کشور
 {% endblock %}
 {% block main %}
-<body>
+    <body>
     <div class="container mt-5">
         <h2 class="text-center mb-4">افزودن کشور</h2>
+
         {% if request.user.is_superuser %}
             <!-- دکمه‌های عملیات -->
             <div class="text-right mb-3">
@@ -15,8 +16,13 @@
                 <a href="{% url 'list_phone' %}" class="btn btn-primary">لیست محصولات</a>
             </div>
         {% endif %}
+
+
+
+
         <form method="post" enctype="multipart/form-data" class="bg-light p-4 rounded shadow" novalidate>
             {% csrf_token %}
+
             <div class="form-group text-right">
                 <label for="{{ form.name.id_for_label }}" class="font-weight-bold">نام کشور</label>
                 {{ form.name|add_class:"form-control" }}
@@ -32,27 +38,27 @@
         <h3 class="mt-5 text-center">لیست کشورها</h3>
         <table id="countries-table" class="table table-bordered mt-3 text-right">
             <thead class="thead-light">
-                <tr>
-                    <th>نام کشور</th>
-                    <th class="text-right">عملیات</th>
-                </tr>
+            <tr>
+                <th>نام کشور</th>
+                <th class="text-right">عملیات</th>
+            </tr>
             </thead>
             <tbody>
-                {% for country in countries %}
-                    <tr id="country-row-{{ country.id }}">
-                        <td>{{ country.name }}</td>
-                        <td class="text-right">
-                            <a href="{% url 'edit_country' country.id %}" class="btn btn-warning btn-sm">ویرایش</a>
-                            <button class="btn btn-danger btn-sm delete-country" data-id="{{ country.id }}">حذف</button>
-                        </td>
-                    </tr>
-                {% empty %}
-                    <tr>
-                        <td colspan="2" class="text-center alert alert-warning">هیچ کشوری موجود نیست</td>
-                    </tr>
-                {% endfor %}
+            {% for country in countries %}
+                <tr id="country-row-{{ country.id }}">
+                    <td>{{ country.name }}</td>
+                    <td class="text-right">
+                        <a href="{% url 'edit_country' country.id %}" class="btn btn-warning btn-sm">ویرایش</a>
+                        <button class="btn btn-danger btn-sm delete-country" data-id="{{ country.id }}">حذف</button>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="2" class="text-center alert alert-warning">هیچ کشوری موجود نیست</td>
+                </tr>
+            {% endfor %}
             </tbody>
         </table>
     </div>
-</body>
+    </body>
 {% endblock %}
