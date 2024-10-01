@@ -1,4 +1,4 @@
-from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin, UserPassesTestMixin
 from django.db.models import Q, F
 from django.shortcuts import redirect
 from django.views import View
@@ -9,6 +9,11 @@ from .models import Brand, Phone, Country, Color
 from .forms import BrandForm, PhoneForm, CountryForm, ColorForm
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib import messages
+
+
+class SuperUserRequiredMixin(UserPassesTestMixin):
+    def test_func(self):
+        return self.request.user.is_superuser
 
 
 class PhoneListView(ListView):
@@ -49,8 +54,7 @@ class PhoneListView(ListView):
         return queryset
 
 
-
-class AddPhoneView(CreateView):
+class AddPhoneView(SuperUserRequiredMixin, CreateView):
     model = Phone
     form_class = PhoneForm
     template_name = 'mobile_inventory/add_phone.html'
@@ -59,7 +63,7 @@ class AddPhoneView(CreateView):
     # permission_required = 'mobile_inventory.add_phone'
 
 
-class EditPhoneView(UpdateView):
+class EditPhoneView(SuperUserRequiredMixin, UpdateView):
     model = Phone
     form_class = PhoneForm
     template_name = 'mobile_inventory/edit_phone.html'
@@ -70,7 +74,7 @@ class EditPhoneView(UpdateView):
     #     return super().form_valid(form)
 
 
-class DeletePhoneView(DeleteView):
+class DeletePhoneView(SuperUserRequiredMixin, DeleteView):
     model = Phone
     template_name = 'mobile_inventory/delete_phone.html'
     success_url = reverse_lazy('list_phone')
@@ -78,7 +82,7 @@ class DeletePhoneView(DeleteView):
 
 # -------------------------------------------------------------------
 
-class AddBrandView(CreateView):
+class AddBrandView(SuperUserRequiredMixin, CreateView):
     model = Brand
     form_class = BrandForm
     template_name = 'mobile_inventory/add_brand.html'
@@ -99,7 +103,7 @@ class AddBrandView(CreateView):
         return context
 
 
-class EditBrandView(UpdateView):
+class EditBrandView(SuperUserRequiredMixin, UpdateView):
     model = Brand
     form_class = BrandForm
     template_name = 'mobile_inventory/edit_brand.html'
@@ -115,7 +119,7 @@ class EditBrandView(UpdateView):
         return reverse_lazy('add_brand')
 
 
-class DeleteBrandView(DeleteView):
+class DeleteBrandView(SuperUserRequiredMixin, DeleteView):
     model = Brand
     template_name = 'mobile_inventory/delete_brand.html'
     success_url = reverse_lazy('add_brand')  # آدرس برگشت بعد از حذف
@@ -124,7 +128,7 @@ class DeleteBrandView(DeleteView):
 # ---------------------------------------------------------------
 
 
-class AddColorView(CreateView):
+class AddColorView(SuperUserRequiredMixin, CreateView):
     model = Color
     form_class = ColorForm
     template_name = 'mobile_inventory/add_color.html'
@@ -145,7 +149,7 @@ class AddColorView(CreateView):
         return context
 
 
-class EditColorView(UpdateView):
+class EditColorView(SuperUserRequiredMixin, UpdateView):
     model = Color
     form_class = ColorForm
     template_name = 'mobile_inventory/edit_color.html'
@@ -161,7 +165,7 @@ class EditColorView(UpdateView):
         return reverse_lazy('add_color')
 
 
-class DeleteColorView(DeleteView):
+class DeleteColorView(SuperUserRequiredMixin, DeleteView):
     model = Color
     template_name = 'mobile_inventory/delete_color.html'
     success_url = reverse_lazy('add_color')
@@ -170,7 +174,7 @@ class DeleteColorView(DeleteView):
 # -------------------------------------------------------------------
 
 
-class AddCountryView(CreateView):
+class AddCountryView(SuperUserRequiredMixin, CreateView):
     model = Country
     form_class = CountryForm
     template_name = 'mobile_inventory/add_country.html'
@@ -190,7 +194,7 @@ class AddCountryView(CreateView):
         return context
 
 
-class EditCountryView(UpdateView):
+class EditCountryView(SuperUserRequiredMixin, UpdateView):
     model = Country
     form_class = CountryForm
     template_name = 'mobile_inventory/edit_country.html'
@@ -206,7 +210,7 @@ class EditCountryView(UpdateView):
         return reverse_lazy('add_country')  # به‌دست آوردن شناسه کشور ویرایش شده
 
 
-class DeleteCountryView(DeleteView):
+class DeleteCountryView(SuperUserRequiredMixin, DeleteView):
     model = Country
     template_name = 'mobile_inventory/delete_country.html'
     success_url = reverse_lazy('add_country')
