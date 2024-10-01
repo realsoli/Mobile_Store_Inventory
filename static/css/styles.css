@@ -2,7 +2,7 @@ body {
     font-family: Arial, sans-serif;
     margin: 20px;
     background-color: #f4f4f4;
-    direction: rtl; /* راست‌چین کردن متن */
+    direction: rtl; /* راست‌چین کردن کل متن */
 }
 
 h1 {
@@ -29,7 +29,6 @@ th, td {
 
 th {
     background-color: burlywood;
-
     color: black;
 }
 
@@ -78,21 +77,55 @@ tr:hover {
 }
 
 .error-message {
-    /*border: 1px solid #dc3545; !* رنگ حاشیه قرمز *!*/
-    background-color: #f8d7da; /* پس‌زمینه قرمز کمرنگ */
-    color: #721c24; /* رنگ متن */
-    padding: 8px 12px; /* فاصله داخلی */
-    border-radius: 5px; /* گوشه‌های گرد */
-    font-family: 'Arial', sans-serif; /* انتخاب فونت */
-    font-size: 18px; /* اندازه فونت */
-    margin-top: 5px; /* فاصله از بالای کادر */
-    /*width: fit-content; !* اندازه کادر بر اساس محتوا *!*/
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 8px 12px;
+    border-radius: 5px;
+    font-family: 'Arial', sans-serif;
+    font-size: 18px;
+    margin-top: 5px;
 }
 
 a {
-    text-decoration: none; /* خط زیر لینک را حذف می‌کند */
+    text-decoration: none;
 }
 
 a:hover {
-    text-decoration: underline; /* در حالت hover خط زیر لینک را برمی‌گرداند */
+    text-decoration: underline;
+}
+
+/* تنظیمات مربوط به نمایش اعداد و عناصر LTR */
+.ltr-number, .pagination {
+    direction: ltr; /* اعداد و صفحه‌بندی به صورت چپ به راست */
+    text-align: left;
+}
+
+/* تنظیمات مربوط به صفحه‌بندی */
+.pagination {
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+}
+
+.pagination .page-item {
+    margin: 0 5px;
+}
+
+.pagination .page-link {
+    padding: 8px 16px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    color: #007bff;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.pagination .page-link:hover {
+    background-color: #f0f0f0;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
 }

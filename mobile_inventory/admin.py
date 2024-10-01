@@ -4,7 +4,7 @@ from .models import Phone, Color, Brand, Country
 
 @admin.register(Phone)
 class PhoneAdmin(admin.ModelAdmin):
-    list_display = ['model', 'brand', 'color', 'country_of_manufacture', 'price', 'is_available']
+    list_display = ['brand', 'model', 'color', 'country_of_manufacture', 'price', 'is_available']
     search_fields = ['model', 'brand__name', 'color__name']
 
 
