@@ -28,8 +28,8 @@
     <table id="phones-table" border="1" style="width: 100%; border-collapse: collapse;">
         <thead>
         <tr>
-            <th><h4>مدل</h4></th>
 
+            <th><h4>ردیف</h4></th>
             <th><a href="{% url 'add_brand' %}"><h4>برند</h4></a></th>
             <th><h4>مدل</h4></th>
             <th><a href="{% url 'add_brand' %}"><h4>ملیت برند</h4></a></th>
@@ -46,8 +46,10 @@
         </thead>
         <tbody>
         {% for phone in phones %}
+
             <tr id="phone-row-{{ phone.slug }}">
                 <td>{{ forloop.counter }}</td>
+
                 <td>{{ phone.brand.name }}</td>
                 <td>{{ phone.model }}</td>
                 <td>{{ phone.brand.nationality }}</td>
@@ -100,6 +102,9 @@
                     </li>
                     <li class="page-item">
                         <a class="page-link" href="?page=
+
+
+
                                 {{ page_obj.previous_page_number }}{% if request.GET.query %}&query={{ request.GET.query }}{% endif %}">&laquo;</a>
                     </li>
                 {% endif %}
@@ -110,6 +115,9 @@
                     {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
                         <li class="page-item">
                             <a class="page-link" href="?page=
+
+
+
                                     {{ num }}{% if request.GET.query %}&query={{ request.GET.query }}{% endif %}">{{ num }}</a>
                         </li>
                     {% endif %}
@@ -118,10 +126,16 @@
                 {% if page_obj.has_next %}
                     <li class="page-item">
                         <a class="page-link" href="?page=
+
+
+
                                 {{ page_obj.next_page_number }}{% if request.GET.query %}&query={{ request.GET.query }}{% endif %}">&raquo;</a>
                     </li>
                     <li class="page-item">
                         <a class="page-link" href="?page=
+
+
+
                                 {{ paginator.num_pages }}{% if request.GET.query %}&query={{ request.GET.query }}{% endif %}">آخرین</a>
                     </li>
                 {% endif %}

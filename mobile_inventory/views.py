@@ -16,7 +16,7 @@ class PhoneListView(ListView):
     template_name = 'mobile_inventory/phone_list.html'
     context_object_name = 'phones'
     ordering = ['-created_at']
-    paginate_by = 5
+    paginate_by = 6
 
     def get_queryset(self):
         queryset = Phone.objects.all().order_by('-created_at')
