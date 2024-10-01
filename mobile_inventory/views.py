@@ -1,5 +1,5 @@
 from django.contrib.auth.mixins import PermissionRequiredMixin
-from django.db.models import Q
+from django.db.models import Q, F
 from django.shortcuts import redirect
 from django.views import View
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView
@@ -21,14 +21,33 @@ class PhoneListView(ListView):
     def get_queryset(self):
         queryset = Phone.objects.all().order_by('-created_at')
 
+        # دریافت پارامترهای جستجو
         query = self.request.GET.get('query', None)
+        brand_name = self.request.GET.get('brand_name', None)
+        report_type = self.request.GET.get('report_type', None)
+
+        # گزارش برندهای کره‌ای
+        if report_type == 'korean_brands':
+            queryset = queryset.filter(brand__nationality='Korea')
+
+        # گزارش موبایل‌های برند مشخص
+        elif report_type == 'brand_phones' and brand_name:
+            queryset = queryset.filter(brand__name__icontains=brand_name)
+
+        # گزارش موبایل‌هایی که ملیت برند با کشور سازنده برابر است
+        elif report_type == 'matching_nationality':
+            queryset = queryset.filter(brand__nationality=F('country_of_manufacture__name'))
+
+        # جستجو بر اساس مدل، برند یا ملیت برند
         if query:
             queryset = queryset.filter(
                 Q(model__icontains=query) |
                 Q(brand__name__icontains=query) |
                 Q(brand__nationality__icontains=query)
-            )  # جستجو بر اساس مدل، برند یا ملیت برند
+            )
+
         return queryset
+
 
 
 class AddPhoneView(CreateView):

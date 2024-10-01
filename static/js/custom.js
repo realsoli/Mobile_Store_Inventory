@@ -273,3 +273,22 @@ $(document).ready(function () {
         });
     });
 });
+
+
+$(document).ready(function () {
+    $('#report_type').change(function () {
+        const brandInputContainer = $('#brand-input-container');
+        brandInputContainer.toggle(this.value === 'brand_phones');
+    });
+
+    // نمایش قسمت برند در صورت انتخاب شدن گزینه "موبایل‌های برند مشخص"
+    const reportType = $('#report_type').val();
+    const brandInputContainer = $('#brand-input-container');
+    if (reportType === 'brand_phones') {
+        brandInputContainer.show();
+    }
+});
+
+
+
+

@@ -5,19 +5,45 @@
 {% block main %}
 
     <body>
-    <h1>لیست موبایل‌ها</h1>
+    {#    <h1>لیست موبایل‌ها</h1>#}
 
     <!-- فرم جستجو -->
     <form method="get" class="search-form">
+        {#         <label for="report_type">جستوجوی محصول</label>#}
         <input type="text" name="query" id="query" value="{{ request.GET.query|default:'' }}" class="search-input"
                placeholder="جستجوی گوشی...">
-        <button type="submit" class="search-button">جستجو</button>
+        <button type="submit" class="search-button mr-2">جستجو</button>
     </form>
+    <hr>
+    {#    <h1>گزارش گیری</h1>#}
+    <br>
+   <form method="get" class="search-form">
+    <select name="report_type" id="report_type" class="search-input ml-2" required>
+        <option value="">انتخاب نوع گزارش</option>
+        <option value="korean_brands" {% if request.GET.report_type == 'korean_brands' %}selected{% endif %}>برندهای کره‌ای</option>
+        <option value="brand_phones" {% if request.GET.report_type == 'brand_phones' %}selected{% endif %}>موبایل‌های برند</option>
+        <option value="matching_nationality" {% if request.GET.report_type == 'matching_nationality' %}selected{% endif %}>تطابق ملیت برند و کشور</option>
+    </select>
+
+    <div id="brand-input-container" style="display: none;">
+        <label for="brand_name"><h4>نام برند:</h4></label>
+        <input type="text" name="brand_name" id="brand_name" class="search-input"
+               placeholder="نام برند را وارد کنید..."
+               value="{{ request.GET.brand_name|default:'' }}">
+    </div>
+
+    <button type="submit" class="search-button mr-2">دریافت گزارش</button>
+</form>
+
+
+
+
 
     {% if request.user.is_superuser %}
         <!-- دکمه افزودن محصول -->
         <div class="text-right mb-3">
             <a href="{% url 'add_phone' %}" class="btn btn-primary">افزودن محصول</a>
+            <a href="{% url 'list_phone' %}" class="btn btn-primary">محصولات</a>
         </div>
     {% endif %}
 
@@ -105,6 +131,10 @@
 
 
 
+
+
+
+
                                 {{ page_obj.previous_page_number }}{% if request.GET.query %}&query={{ request.GET.query }}{% endif %}">&laquo;</a>
                     </li>
                 {% endif %}
@@ -115,6 +145,10 @@
                     {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
                         <li class="page-item">
                             <a class="page-link" href="?page=
+
+
+
+
 
 
 
@@ -129,10 +163,18 @@
 
 
 
+
+
+
+
                                 {{ page_obj.next_page_number }}{% if request.GET.query %}&query={{ request.GET.query }}{% endif %}">&raquo;</a>
                     </li>
                     <li class="page-item">
                         <a class="page-link" href="?page=
+
+
+
+
 
 
 
