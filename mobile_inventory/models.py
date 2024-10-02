@@ -1,3 +1,5 @@
+import itertools
+
 from django.db import models
 from django.utils.text import slugify
 from unidecode import unidecode
@@ -80,8 +82,14 @@ class Phone(models.Model):
     # تولید slug به صورت خودکار
     def save(self, *args, **kwargs):
         if not self.slug:
-            # استفاده از unidecode برای تبدیل حروف فارسی به لاتین
-            self.slug = slugify(unidecode(self.model))
+            base_slug = slugify(unidecode(f"{self.model}-{self.color}"))
+            slug = base_slug
+            # چک کردن برای جلوگیری از تکراری بودن slug
+            for i in itertools.count(1):
+                if not Phone.objects.filter(slug=slug).exists():
+                    break
+                slug = f"{base_slug}-{i}"
+            self.slug = slug
         super().save(*args, **kwargs)
 
     class Meta:

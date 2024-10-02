@@ -21,7 +21,7 @@ class PhoneListView(ListView):
     template_name = 'mobile_inventory/phone_list.html'
     context_object_name = 'phones'
     ordering = ['-created_at']
-    paginate_by = 6
+    paginate_by = 7
 
     def get_queryset(self):
         queryset = Phone.objects.all().order_by('-created_at')
@@ -167,7 +167,7 @@ class EditColorView(SuperUserRequiredMixin, UpdateView):
 
 class DeleteColorView(SuperUserRequiredMixin, DeleteView):
     model = Color
-    template_name = 'mobile_inventory/delete_color.html'
+    # template_name = 'mobile_inventory/delete_color.html'
     success_url = reverse_lazy('add_color')
 
 
@@ -212,5 +212,5 @@ class EditCountryView(SuperUserRequiredMixin, UpdateView):
 
 class DeleteCountryView(SuperUserRequiredMixin, DeleteView):
     model = Country
-    template_name = 'mobile_inventory/delete_country.html'
+    # template_name = 'mobile_inventory/delete_country.html'
     success_url = reverse_lazy('add_country')
