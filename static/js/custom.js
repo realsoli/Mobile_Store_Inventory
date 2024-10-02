@@ -275,6 +275,8 @@ $(document).ready(function () {
 });
 
 
+// ---------------------------------------------------------------
+
 $(document).ready(function () {
     $('#report_type').change(function () {
         const brandInputContainer = $('#brand-input-container');
