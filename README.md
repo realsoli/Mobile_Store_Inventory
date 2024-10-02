@@ -37,3 +37,22 @@ To run the project using Docker, follow these steps:
 
 3. **Access the Application**
    Visit `http://localhost:8000` in your browser after the build process completes.
+
+## Create a Superuser
+
+To access the Django admin panel and manage products, you need to create a superuser. Follow these steps:
+
+1. **Open a new terminal window** while Docker is running.
+
+2. **Create a superuser** by running the following command:
+   
+   ```bash
+   docker-compose exec web python manage.py createsuperuser
+
+   ```
+    You will be prompted to enter a username, email, and password for the superuser. Make sure the password meets Django's security requirements.
+
+ 3. **After creating the superuser,** you can access the admin interface at:
+     ```bash
+     http://localhost:8000/admin/
+     ```   
