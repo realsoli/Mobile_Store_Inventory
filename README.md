@@ -36,4 +36,4 @@ To run the project using Docker, follow these steps:
    This command builds the Docker images and starts the services as defined in `docker-compose.yml`.
 
 3. **Access the Application**
-   Visit `http://localhost:3000` in your browser after the build process completes.
+   Visit `http://localhost:8000` in your browser after the build process completes.
