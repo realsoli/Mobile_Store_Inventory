@@ -11,7 +11,4 @@ COPY . /app/
 
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
 
-
-ENV DJANGO_ENV=production
-
 EXPOSE 8000

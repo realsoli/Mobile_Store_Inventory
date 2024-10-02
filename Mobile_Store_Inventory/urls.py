@@ -18,9 +18,9 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 
-from Mobile_Store_Inventory.settings import base
+from Mobile_Store_Inventory import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('mobile_inventory.urls'))
-] + static(base.MEDIA_URL, document_root=base.MEDIA_ROOT)
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
