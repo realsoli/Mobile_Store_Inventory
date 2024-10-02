@@ -76,7 +76,7 @@ class EditPhoneView(SuperUserRequiredMixin, UpdateView):
 
 class DeletePhoneView(SuperUserRequiredMixin, DeleteView):
     model = Phone
-    template_name = 'mobile_inventory/delete_phone.html'
+    # template_name = 'mobile_inventory/delete_phone.html'
     success_url = reverse_lazy('list_phone')
 
 
@@ -121,7 +121,7 @@ class EditBrandView(SuperUserRequiredMixin, UpdateView):
 
 class DeleteBrandView(SuperUserRequiredMixin, DeleteView):
     model = Brand
-    template_name = 'mobile_inventory/delete_brand.html'
+    # template_name = 'mobile_inventory/delete_brand.html'
     success_url = reverse_lazy('add_brand')  # آدرس برگشت بعد از حذف
 
 
