@@ -42,7 +42,7 @@ To run the project using Docker, follow these steps:
 
 To access the Django admin panel and manage products, you need to create a superuser. Follow these steps:
 
-1. **Open a new terminal window** while Docker is running.
+1. **While Docker Compose is running**, you need to open a new terminal in the same directory
 
 2. **Create a superuser** by running the following command:
    
@@ -51,8 +51,27 @@ To access the Django admin panel and manage products, you need to create a super
 
    ```
     You will be prompted to enter a username, email, and password for the superuser. Make sure the password meets Django's security requirements.
-
+   
+## Add Product
  3. **After creating the superuser,** you can access the admin interface at:
+ 
      ```bash
      http://localhost:8000/admin/
-     ```   
+     ```
+      OR:
+    
+      **after creating the superuser, go to the http://localhost:8000/**
+
+      **There is a "Login Panel" button that you can click. Enter the username and password you created for the superuser.**
+
+      **Once logged in, an "Add Product" button will appear on the  http://localhost:8000/, allowing you to start adding products.**
+
+
+
+
+
+
+
+
+
+        
